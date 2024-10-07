@@ -88,4 +88,7 @@ company_industry_map = classify_companies(companies_list)
 data["Company Industry"] = data["Company Name"].map(company_industry_map)
 
 # Print the updated dataframe
-print(data)
+# print(data)
+
+# Save the results to a new CSV
+# data.to_csv('CompaniesWithIndustries.csv', index=False)
