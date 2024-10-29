@@ -37,14 +37,19 @@ companies_list = data['Company Name'].to_list()
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Base prompt template
-base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'NA'."
+# base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'NA'."
+base_prompt = """
+Please review the following list of industries: {categories}. Your task is to classify the company into the most relevant industry. If the exact industry is not listed, choose the closest match. 
+- If there are minor misspellings or variations in the company name, overlook them and try to identify the correct industry based on context. 
+- Use your best judgment to map the company to the most fitting industry.
+- Return 'NA' only if the company cannot be classified into any industry, even approximately."""
 
 # Function to create a prompt for each company
 def create_prompt(company):
     """
     Creates a customized prompt for each company.
     """
-    return base_prompt + f" Give your answer in the format of 'Company: Industry'. Do not put anything in bold and don't put additional info, thank you. The company in question is {company}."
+    return base_prompt + f" Provide your answer strictly in the format 'Company: Industry'. The company in question is {company}"
 
 # Function to convert the model's string response into a dictionary
 def str_to_dict(response_string):

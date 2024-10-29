@@ -32,7 +32,7 @@ def create_prompt(company, categories):
     """
     base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'NA'."
     
-    return base_prompt + f" Give your answer in the format of 'Company: Industry'. Do not put anything in bold and don't put additional info, thank you. The company in question is {company}."
+    return base_prompt + f" Give your answer in the format of 'Company:Industry'. Do not put anything in bold and don't put additional info, thank you. The company in question is {company}."
 
 # Function to convert the model's string response into a dictionary
 def str_to_dict(response_string):
@@ -41,7 +41,7 @@ def str_to_dict(response_string):
     Assumes the format is 'Company: Industry'.
     """
     try:
-        company, industry = response_string.strip().split(': ', 1)
+        company, industry = response_string.strip().split(':', 1)
         return {company: industry}
     except ValueError:
         return {}  # Return an empty dictionary if the response format is incorrect
@@ -59,12 +59,12 @@ def classify_companies(companies_list,categories,model):
         try:
             response = model.generate_content(
                 prompt, 
-                request_options=RequestOptions(retry=retry.Retry(initial=10, multiplier=2, maximum=60, timeout=300))
+                request_options=RequestOptions(retry=retry.Retry(initial=10, multiplier=2, maximum=60, timeout=200))
             )
             res_string = response.text
             master_dict.update(str_to_dict(res_string))
         except Exception as e:
-            print(f"Error classifying {company}: {e}")
+            print(f"Error classifying {company}:{e}")
             master_dict[company] = 'NA'
     
     return master_dict    

@@ -2,8 +2,12 @@
 
 import IndustryClassifier as ic
 import pandas as pd
+# import os
+# import time
 
-data = pd.read_csv("CompaniesTest.csv")
+data = pd.read_csv("ThirteenthBatch.csv", encoding='unicode_escape')
+
+# data = data[1200:]
 
 companies_list = ic.get_companies(data)
 
@@ -31,7 +35,14 @@ company_industry_map = ic.classify_companies(companies_list, categories, model)
 # Map the results to the dataframe
 data["Company Industry"] = data["Company Name"].map(company_industry_map)
 
-print(data)
+# print(data)
 
 # Save the results to a new CSV
-# data.to_csv('CompaniesWithIndustries.csv', index=False)
+data.to_csv('CompaniesWithIndustriesThirteenthBatch.csv', index=False)
+
+# # Combine all the CSVs generated
+
+# # companies_csv_files = pd.concat(map(pd.read_csv, ['CompaniesWithIndustriesFirstBatch.csv','CompaniesWithIndustriesSecondBatch.csv','CompaniesWithIndustriesThirdBatch.csv',
+#                                                 #   'CompaniesWithIndustriesFourthBatch.csv','CompaniesWithIndustriesFifthBatch.csv','CompaniesWithIndustriesSixthBatch.csv']), ignore_index=True)
+
+# # companies_csv_files.to_csv('Compiled.csv', index=False) 
