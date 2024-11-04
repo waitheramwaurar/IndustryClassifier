@@ -31,5 +31,5 @@ for file in files:
 # notfound_df.to_csv("Not_Categorised.csv")
 # classified_df.to_csv("Classified_Companies.csv")
 
-print(classified_df.head(50))
+# print(classified_df.head(50))
 

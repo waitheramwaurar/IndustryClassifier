@@ -30,7 +30,7 @@ def create_prompt(company, categories):
     """
     Initializes the LLM model and returns the base prompt
     """
-    base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'NA'."
+    base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'Not Found'."
     
     return base_prompt + f" Give your answer in the format of 'Company:Industry'. Do not put anything in bold and don't put additional info, thank you. The company in question is {company}."
 
@@ -38,7 +38,7 @@ def create_prompt(company, categories):
 def str_to_dict(response_string):
     """
     Convert the string response from the model into a dictionary.
-    Assumes the format is 'Company: Industry'.
+    Assumes the format is 'Company:Industry'.
     """
     try:
         company, industry = response_string.strip().split(':', 1)
@@ -65,6 +65,6 @@ def classify_companies(companies_list,categories,model):
             master_dict.update(str_to_dict(res_string))
         except Exception as e:
             print(f"Error classifying {company}:{e}")
-            master_dict[company] = 'NA'
+            master_dict[company] = 'Not Found'
     
     return master_dict    

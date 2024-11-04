@@ -9,7 +9,7 @@ from google.api_core import retry
 load_dotenv()
 
 # Configure Gemini API with API key
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key=os.environ["GEMINI_API_KEY_1"])
 
 # List of industry categories
 categories = [
@@ -39,10 +39,10 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 # Base prompt template
 # base_prompt = f"Please look through this list of industries: {categories} and tell me what industry this company fits into. If you cannot find the company, give the industry as 'NA'."
 base_prompt = """
-Please review the following list of industries: {categories}. Your task is to classify the company into the most relevant industry. If the exact industry is not listed, choose the closest match. 
-- If there are minor misspellings or variations in the company name, overlook them and try to identify the correct industry based on context. 
+Please review the following list of industries: {categories}. Your task is to classify the company into the most relevant industry from the list. If the exact industry is not listed, choose the closest match. 
+- If there are minor misspellings or variations in the company name, overlook them and try to identify the correct industry from the list based on context. 
 - Use your best judgment to map the company to the most fitting industry.
-- Return 'NA' only if the company cannot be classified into any industry, even approximately."""
+- Return 'Not Found' only if the company cannot be classified into any industry, even approximately."""
 
 # Function to create a prompt for each company
 def create_prompt(company):
